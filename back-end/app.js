@@ -3,6 +3,7 @@ const express = require('express') // CommonJS import style!
 const morgan = require('morgan') // middleware for nice logging of incoming HTTP requests
 const cors = require('cors') // middleware for enabling CORS (Cross-Origin Resource Sharing) requests.
 const mongoose = require('mongoose')
+const path = require('path');
 
 const app = express() // instantiate an Express object
 app.use(morgan('dev', { skip: (req, res) => process.env.NODE_ENV === 'test' })) // log all incoming requests, except when in unit test mode.  morgan has a few logging default styles - dev is a nice concise color-coded style
@@ -11,6 +12,7 @@ app.use(cors()) // allow cross-origin resource sharing
 // use express's builtin body-parser middleware to parse any data included in a request
 app.use(express.json()) // decode JSON-formatted incoming POST data
 app.use(express.urlencoded({ extended: true })) // decode url-encoded incoming POST data
+app.use('/static', express.static(path.join(__dirname, 'public')));
 
 // connect to database
 mongoose
@@ -77,6 +79,19 @@ app.post('/messages/save', async (req, res) => {
     })
   }
 })
+app.get('/api/about', (req, res) => {
+  const base = `${req.protocol}://${req.get('host')}`; // dynamically build the base URL
 
+  res.json({
+    title: "About Us",
+    name: "Amanuel Nigussie Demeke",
+    image: `${base}/static/me.jpg`,
+    paragraphs: [
+      "Hi, I'm Amanuel. I am a junior student at NYUAD studying Computer Science.",
+      "I am currently in New York city for my study abroad semester.",
+      "I am taking a few interesting courses, including Agile Development course where I built this app!",
+    ]
+  });
+});
 // export the express app we created to make it available to other modules
 module.exports = app // CommonJS export style!

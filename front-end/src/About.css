@@ -1,0 +1,29 @@
+.about {
+  max-width: 900px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  text-align: center; /* center everything horizontally */
+}
+
+.about h1 {
+  margin-bottom: 0.25rem;
+}
+
+.about .sub {
+  color: #555;
+  font-size: 1.05rem;
+  margin-bottom: 1.5rem;
+}
+
+.about img {
+  width: 240px;
+  max-width: 100%;
+  border-radius: 12px;
+  display: block;
+  margin: 0 auto 1.5rem auto; /* centers image horizontally */
+}
+
+.about p {
+  line-height: 1.7;
+  margin: 0.75rem 0;
+}
